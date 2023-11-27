@@ -12,21 +12,24 @@
   {% for task in task_list %}
     <div class="ml-3 border-bottom">
       {% if task.task_done %}
-        <h6>{{ task.content }} <span class="color-green">Done</span> <a class="btn btn-secondary" style="float: right"
-                                                                        href="{% url 'taskmanager:complete-or-not' pk=task.id %}">Undo</a>
+        <h6><strong>{{ task.content }}</strong> <span class="color-green">Done</span> <a class="btn btn-secondary"
+                                                                                         style="float: right"
+                                                                                         href="{% url 'taskmanager:complete-or-not' pk=task.id %}">Undo</a>
         </h6>
       {% else %}
-        <h6>{{ task.content }} <span class="color-red">Not done</span> <a class="btn btn-success" style="float: right"
-                                                                          href="{% url 'taskmanager:complete-or-not' pk=task.id %} ">Complete</a>
+        <h6><strong>{{ task.content }}</strong> <span class="color-red">Not done</span> <a class="btn btn-success"
+                                                                                           style="float: right"
+                                                                                           href="{% url 'taskmanager:complete-or-not' pk=task.id %} ">Complete</a>
         </h6>
       {% endif %}
-      Created: {{ task.datetime_field }}
-
+      <strong>Created: </strong> {{ task.datetime_field }}
+      <strong>{% if task.deadline %}
+        Deadline:
+      {% endif %}</strong>
       {% if task.deadline %}
-        Deadline: {{ task.deadline }}
+        {{ task.deadline }}
       {% endif %}
-
-      <p><span>Tags:
+      <p><span class="tag-container" style="opacity: 0.7;">Tags:
         {% for tag in task.tags.all %}
           {{ tag.name }}
         {% endfor %}
@@ -36,4 +39,13 @@
     </div>
     <br>
   {% endfor %}
+  <style>
+    .color-green {
+      color: green;
+    }
+
+    .color-red {
+      color: red;
+    }
+  </style>
 {% endblock %}

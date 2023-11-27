@@ -12,15 +12,15 @@
   {% for task in task_list %}
     <div class="ml-3 border-bottom">
       {% if task.task_done %}
-        <h6><strong>{{ task.content }}</strong> <span class="color-green">Done</span> <a class="btn btn-secondary"
+        <h4><strong>{{ task.content }}</strong> <span class="color-green">Done</span> <a class="btn btn-secondary"
                                                                                          style="float: right"
                                                                                          href="{% url 'taskmanager:complete-or-not' pk=task.id %}">Undo</a>
-        </h6>
+        </h4>
       {% else %}
-        <h6><strong>{{ task.content }}</strong> <span class="color-red">Not done</span> <a class="btn btn-success"
+        <h4><strong>{{ task.content }}</strong> <span class="color-red">Not done</span> <a class="btn btn-success"
                                                                                            style="float: right"
                                                                                            href="{% url 'taskmanager:complete-or-not' pk=task.id %} ">Complete</a>
-        </h6>
+        </h4>
       {% endif %}
       <strong>Created: </strong> {{ task.datetime_field }}
       <strong>{% if task.deadline %}

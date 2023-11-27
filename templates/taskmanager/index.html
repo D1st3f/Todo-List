@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}
+  <title>Tasks | TagList</title>
+{% endblock title %}
+
+{% block content %}
+  <h1 class="page-title">TODO list
+    <a class="btn btn-primary" style="float: right; margin-right: 10px; margin-top: 10px;"
+       href="{% url 'taskmanager:task-create' %}">Add task</a>
+  </h1>
+  <br>
+  {% for task in task_list %}
+    <div class="ml-3 border-bottom">
+      {% if task.task_done %}
+        <h4><strong>{{ task.content }}</strong> <span class="color-green">Done</span> <a class="btn btn-secondary"
+                                                                                         style="float: right"
+                                                                                         href="{% url 'taskmanager:complete-or-not' pk=task.id %}">Undo</a>
+        </h4>
+      {% else %}
+        <h4><strong>{{ task.content }}</strong> <span class="color-red">Not done</span> <a class="btn btn-success"
+                                                                                           style="float: right"
+                                                                                           href="{% url 'taskmanager:complete-or-not' pk=task.id %} ">Complete</a>
+        </h4>
+      {% endif %}
+      <strong>Created: </strong> {{ task.datetime_field }}
+      <strong>{% if task.deadline %}
+        Deadline:
+      {% endif %}</strong>
+      {% if task.deadline %}
+        {{ task.deadline }}
+      {% endif %}
+      <p><span class="tag-container" style="opacity: 0.7;">Tags:
+        {% for tag in task.tags.all %}
+          {{ tag.name }}
+        {% endfor %}
+      </span>
+        <a href="{% url 'taskmanager:task-update' pk=task.id %}">Update</a>
+        <a href="{% url 'taskmanager:task-delete' pk=task.id %}">Delete</a>
+    </div>
+    <br>
+  {% endfor %}
+  <style>
+    .color-green {
+      color: green;
+    }
+
+    .color-red {
+      color: red;
+    }
+  </style>
+{% endblock %}
